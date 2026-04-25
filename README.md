@@ -1,20 +1,74 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# ⚡ ElecSys | Election Process Engine  
 
-# Run and deploy your AI Studio app
+> Understand how elections actually work — step by step, visually, and intelligently.
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/c1bbbcaf-40f0-46b3-beb2-cbc8a5443c14
+## 🚀 Overview  
+ElecSys is an interactive web application that simplifies the **entire election process** using animations, guided flows, and AI-powered explanations.  
 
-## Run Locally
+It transforms complex systems into **easy, visual, and engaging learning experiences**.
 
-**Prerequisites:**  Node.js
+---
 
+## ❌ Problem  
+Most people don’t fully understand:
+- What happens after voting  
+- How votes are counted  
+- What ensures fairness  
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Existing platforms are either **too boring or too complex**.
+
+---
+
+## 💡 Solution  
+ElecSys provides:
+- 📊 Interactive timeline of elections  
+- 🎬 Smooth animations & transitions  
+- 🧠 AI assistant for deep explanations  
+
+---
+
+## ✨ Features  
+
+### 🎬 Interactive UI  
+- Smooth scroll animations  
+- Modern dark theme + glassmorphism  
+- Responsive design  
+
+### 🧠 AI Assistant  
+- Explains concepts in:
+  - Simple way  
+  - Step-by-step breakdown  
+  - Real-world examples (India)  
+- Context-aware responses  
+
+### 🗳️ Election Flow  
+- Registration → Voting → Counting → Results  
+- Visual step-by-step explanation  
+
+### 📚 Learning System  
+- Expandable sections  
+- Interactive FAQ  
+
+---
+
+## 🛠️ Tech Stack  
+- HTML, CSS, JavaScript / React  
+- GSAP / Framer Motion / Three.js  
+- Gemini API / OpenAI API  
+
+---
+
+## 🌐 Live Demo  
+👉 **https://ais-pre-yy6wwtvmi2l67l3isebhrt-86893305120.asia-east1.run.app**  
+
+> Experience the full interactive platform with animations and AI assistant.
+
+## ⚙️ Installation  
+
+```bash
+git clone https://github.com/your-username/ElecSys-Election-Process-Engine.git
+cd ElecSys-Election-Process-Engine
+npm install
+npm run dev
