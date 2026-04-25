@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-neon-blue: #3b82f6; /* blue-500 */
+  --color-neon-purple: #9333ea; /* purple-600 */
+  --color-neon-cyan: #22d3ee; /* cyan-400 */
+  --color-dark-bg: #050505;
+}
+
+body {
+  background-color: var(--color-dark-bg);
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none; /* We will use a custom cursor */
+}
+
+/* Fallback for devices without fine pointer */
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-dark-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neon-cyan);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-glow-blue {
+  text-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+}
+
+.text-glow-purple {
+  text-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, var(--color-neon-cyan), var(--color-neon-blue), var(--color-neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
