@@ -27,9 +27,25 @@ const cards = [
 
 export default function Processes() {
   return (
-    <section className="py-32 relative overflow-hidden bg-dark-bg">
+    <section className="py-32 relative overflow-hidden bg-dark-bg z-0">
       <div className="absolute top-0 left-0 w-full h-px bg-white/5" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-white/5" />
+      
+      {/* Subtle Shifting Animated Glow */}
+      <div className="absolute inset-0 -z-10 opacity-20 flex items-center justify-center pointer-events-none">
+        <motion.div 
+          className="w-[80%] h-[60%] blur-[120px] rounded-full"
+          style={{
+            background: 'linear-gradient(90deg, rgba(34,211,238,0.5), rgba(59,130,246,0.5), rgba(147,51,234,0.5))',
+            backgroundSize: '200% 200%'
+          }}
+          animate={{
+            backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{ duration: 15, ease: "easeInOut", repeat: Infinity }}
+        />
+      </div>
       
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-20">

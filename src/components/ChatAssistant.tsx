@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageSquare, X, Send, Bot, User, Sparkles } from 'lucide-react';
-import { explainElectionConcept } from '../services/geminiService';
+import { MessageSquare, X, Send, Bot, Sparkles, BrainCircuit } from 'lucide-react';
+import { explainElectionConcept, generateQuizQuestion } from '../services/geminiService';
 import Markdown from 'react-markdown';
 
 const SUGGESTED_PROMPTS = [
@@ -11,17 +11,20 @@ const SUGGESTED_PROMPTS = [
   "What ensures fairness in elections?"
 ];
 
+// Added Quiz State
+type QuizState = null | { question: string, options: string[], correctIndex: number, explanation: string };
+
 export default function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: 'model' | 'user', text: string }[]>([
-    { role: 'model', text: 'Hello! I am your ElecSys AI Guide. Ask me anything about the election process.' }
+    { role: 'model', text: 'Hello! I am your ElecSys AI Guide. Ask me conceptually about the election process, or try taking a quiz!' }
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [currentSection, setCurrentSection] = useState<string>('');
+  const [activeQuiz, setActiveQuiz] = useState<QuizState>(null);
 
-  // Context awareness: Track which section is in view
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -49,11 +52,11 @@ export default function ChatAssistant() {
     if (isOpen) {
       scrollToBottom();
     }
-  }, [messages, isOpen, isTyping]);
+  }, [messages, isOpen, isTyping, activeQuiz]);
 
   const handleSendMessage = async (text: string) => {
     if (!text.trim() || isTyping) return;
-
+    setActiveQuiz(null); // Clear quiz mode if active
     const userMsg = text.trim();
     setInputMessage('');
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
@@ -62,12 +65,39 @@ export default function ChatAssistant() {
     try {
       const responseText = await explainElectionConcept(userMsg, currentSection);
       setMessages(prev => [...prev, { role: 'model', text: responseText }]);
-    } catch (error) {
-      setMessages(prev => [...prev, { role: 'model', text: 'I encountered an error while trying to process your request. Please try again.' }]);
+    } catch (error: any) {
+      setMessages(prev => [...prev, { role: 'model', text: error.message || 'I encountered an error while trying to process your request. Please try again.' }]);
     } finally {
       setIsTyping(false);
     }
   };
+
+  const handleQuizMe = async () => {
+    setIsTyping(true);
+    setMessages(prev => [...prev, { role: 'user', text: "Generate a quiz question for me." }]);
+    try {
+      const quiz = await generateQuizQuestion();
+      setActiveQuiz(quiz);
+      setMessages(prev => [...prev, { role: 'model', text: 'Here is your question:' }]);
+    } catch (error: any) {
+      setMessages(prev => [...prev, { role: 'model', text: error.message || 'Error generating quiz.' }]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const submitQuizAnswer = (selectedIndex: number) => {
+    if (!activeQuiz) return;
+    const isCorrect = selectedIndex === activeQuiz.correctIndex;
+    const resultMsg = isCorrect ? '✅ Correct! ' : '❌ Incorrect. ';
+    
+    setMessages(prev => [...prev, 
+      { role: 'user', text: `I select: ${activeQuiz.options[selectedIndex]}` },
+      { role: 'model', text: `${resultMsg} ${activeQuiz.explanation}` }
+    ]);
+    setActiveQuiz(null);
+  };
+
 
   return (
     <>
@@ -142,12 +172,39 @@ export default function ChatAssistant() {
                    </div>
                 </motion.div>
               )}
+              
+              {/* Active Quiz UI */}
+              {activeQuiz && !isTyping && (
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex justify-start">
+                  <div className="max-w-[85%] rounded-2xl p-4 bg-purple-500/10 border border-purple-500/20 text-slate-200 rounded-tl-sm">
+                    <p className="font-bold text-white mb-4">{activeQuiz.question}</p>
+                    <div className="flex flex-col gap-2">
+                      {activeQuiz.options.map((opt, i) => (
+                        <button key={i} onClick={() => submitQuizAnswer(i)} className="text-left px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-sm">
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
               <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
             <div className="p-4 border-t border-white/10 bg-black/40">
-              {messages.length === 1 && !isTyping && (
+              <div className="flex justify-between items-center mb-4">
+                <button 
+                  onClick={handleQuizMe}
+                  disabled={isTyping || activeQuiz !== null}
+                  className="text-[10px] uppercase font-bold tracking-wider px-3 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 hover:bg-purple-500/30 transition-colors flex items-center gap-1 disabled:opacity-50"
+                >
+                  <BrainCircuit className="w-3 h-3" /> Test My Knowledge
+                </button>
+              </div>
+
+              {messages.length === 1 && !isTyping && !activeQuiz && (
                  <div className="mb-4 flex flex-wrap gap-2">
                    {SUGGESTED_PROMPTS.map((prompt, i) => (
                      <button 

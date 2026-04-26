@@ -15,9 +15,9 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'Process', href: '#process' },
-    { name: 'Guide', href: '#guide' },
+    { name: 'Simulator', href: '#simulator' },
+    { name: 'Readiness', href: '#readiness' },
+    { name: 'Verify', href: '#verify' },
     { name: 'FAQ', href: '#faq' },
   ];
 
@@ -33,7 +33,6 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0 flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-tr from-cyan-400 to-blue-600 rounded-lg shadow-[0_0_15px_rgba(34,211,238,0.3)]"></div>
             <span className="font-bold text-xl tracking-tight text-white">ELEC<span className="text-cyan-400 italic font-medium">SYS</span></span>
           </div>
           
@@ -48,9 +47,9 @@ export default function Navbar() {
                   {link.name}
                 </a>
               ))}
-              <button className="ml-4 px-6 py-2 bg-white text-black text-xs font-bold uppercase rounded-full hover:bg-cyan-400 transition-all">
+              <a href="#simulator" className="ml-4 px-6 py-2 bg-white text-black text-xs font-bold uppercase rounded-full hover:bg-cyan-400 transition-all inline-block text-center">
                 Get Started
-              </button>
+              </a>
             </div>
           </div>
           
@@ -84,9 +83,9 @@ export default function Navbar() {
                   {link.name}
                 </a>
               ))}
-              <button className="w-full mt-4 px-6 py-3 bg-white text-black text-xs font-bold uppercase rounded-full hover:bg-cyan-400 transition-all">
+              <a href="#simulator" onClick={() => setMobileMenuOpen(false)} className="w-full mt-4 px-6 py-3 bg-white text-black text-xs font-bold uppercase rounded-full hover:bg-cyan-400 transition-all inline-block text-center">
                 Get Started
-              </button>
+              </a>
             </div>
           </motion.div>
         )}

@@ -47,15 +47,15 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
         >
-          <a href="#process" className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-white px-8 font-bold uppercase text-xs text-black transition-all hover:bg-cyan-400 w-full sm:w-auto">
+          <a href="#simulator" className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full bg-white px-8 font-bold uppercase text-xs text-black transition-all hover:bg-cyan-400 w-full sm:w-auto">
             <span className="flex items-center gap-2">
-              Explore Timeline
+              Launch Simulator
               <ChevronRight className="transition-transform group-hover:translate-x-1" size={16} />
             </span>
           </a>
           
-          <a href="#guide" className="group h-12 inline-flex items-center justify-center rounded-full border border-white/20 bg-white/[0.03] px-8 font-bold uppercase text-xs text-slate-300 transition-all hover:bg-white/10 hover:border-white/40 w-full sm:w-auto">
-            Interactive Guide
+          <a href="#readiness" className="group h-12 inline-flex items-center justify-center rounded-full border border-white/20 bg-white/[0.03] px-8 font-bold uppercase text-xs text-slate-300 transition-all hover:bg-white/10 hover:border-white/40 w-full sm:w-auto">
+            Check Readiness
           </a>
         </motion.div>
       </div>
